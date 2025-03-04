@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:post_app_with_dio/model/post_model.dart';
 import 'package:post_app_with_dio/package/api_services.dart';
 
-class PostRepositorys {
+class PostRepository {
   Future<PostModel> addPost(
       {required String path, required PostModel post}) async {
     try {
@@ -31,17 +31,17 @@ class PostRepositorys {
             .map((postModelToJson) => PostModel.fromJson(postModelToJson))
             .toList();
       } else {
-        throw "Something went wrong in response - getAllPost";
+        throw "Something went wrong in response - getAllpost";
       }
     } catch (e) {
       log(e.toString(),name: "Error getAll Catchin here");
-      throw "Something Went Wrong with request/code - getAllPost" ;
+      throw "Something Went Wrong with request/code - getAllpost" ;
       
     }
   }
 
   Future<PostModel> editPost(
-      {required String path, required PostModel post}) async {
+      {required String path, required PostModel post,}) async {
     try {
       log(path, name: "edit post path");
       log(post.toJson().toString(), name: "post to edit");
@@ -54,6 +54,39 @@ class PostRepositorys {
       }
     } catch (e) {
       throw "Wrong with code/request -EditPost";
+    }
+  }
+  Future<List<PostModel>> deletePost({required String path}) async {
+    try {
+      final Response response = await ApiServices.delete(
+        path,
+      );
+      if (response.statusCode == 200) {
+        return (response.data as List)
+            .map((element) => PostModel.fromJson(element))
+            .toList();
+      } else {
+        throw "wrong in response - deletePost";
+      }
+    } catch (e) {
+      throw "Wrong with request/code - delete Post";
+    }
+  }
+
+  Future<List<PostModel>> searchPost(
+      {required String path, required String searchtext}) async {
+    try {
+      final Response response = await ApiServices.get(
+          path: path, queryparameters: {"searchText": searchtext});
+      if (response.statusCode == 200) {
+        return (response.data as List)
+            .map((element) => PostModel.fromJson(element))
+            .toList();
+      } else {
+        throw "wrong in response - searchPost";
+      }
+    } catch (e) {
+      throw "Wrong with request/code -search Post";
     }
   }
 }

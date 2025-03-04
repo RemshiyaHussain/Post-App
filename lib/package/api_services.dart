@@ -45,11 +45,25 @@ class ApiServices {
     }
   }
 
- static Future<Response> put(
+
+  
+  static Future<Response> put(
       String path, Map<String, dynamic> jsonData) async {
     try {
       final Response response = await dio.put(path,
           data: jsonData, options: Options(headers: {"key": "oxdo"}));
+       
+      return response;
+    
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  static Future<Response> delete(String path) async {
+    try {
+      final Response response =
+          await dio.delete(path, options: Options(headers: {"key": "oxdo"}));
       return response;
     } on DioException catch (e) {
       throw Exception(e);

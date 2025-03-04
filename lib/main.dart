@@ -13,8 +13,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => PostBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<PostBloc>(
+          create: (BuildContext context) => PostBloc(),
+        ),
+        
+      ],
       child: MaterialApp(
         home: SplashWidget(),
         debugShowCheckedModeBanner: false,
