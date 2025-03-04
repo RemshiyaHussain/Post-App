@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextStyle(color: Colors.black)),
                 onChanged: (value) {
                   if (searchcontroller.text.trim().isNotEmpty) {
-                    log("on changed");
+                    log( searchcontroller.toString(),name: "on changed");
                     context
                         .read<PostBloc>()
                         .add(PostSearchItem(text: searchcontroller.text));
@@ -59,9 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                       onPressed: () {
                         FocusScope.of(context).unfocus();
-                        // context
-                        //     .read<PostBloc>()
-                        //     .add(PostSearchItem(text: searchcontroller.text));
+                        context
+                            .read<PostBloc>()
+                            .add(PostSearchItem(text: searchcontroller.text));
                       },
                       icon: Icon(Icons.search)),
                   IconButton(
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ListTile(
-                                leading: CircleAvatar(),
+                                leading: CircleAvatar( backgroundImage: AssetImage("assets/boy.jpg",),),
                                 title: Text(
                                   post.userName.toString(),
                                   style: TextStyle(

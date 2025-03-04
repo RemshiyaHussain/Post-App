@@ -113,7 +113,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         emit(currentState.copyWith(searchResult: postlist, isLoading: false));
       } catch (e) {
         emit(currentState.copyWith(
-          searchResult: [],
+          posts: List.from(currentState.posts),
           isError: true,
           isLoading: false,
           message: e.toString(),
